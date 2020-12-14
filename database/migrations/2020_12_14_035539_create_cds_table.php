@@ -16,6 +16,11 @@ class CreateCdsTable extends Migration
         Schema::create('cds', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('cdTitle');
+            $table->string('cdFirstName');
+            $table->string('cdMainName');
+            $table->float('cdPrice');
+            $table->integer('cdPlayLength');
         });
     }
 
