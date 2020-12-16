@@ -10,11 +10,13 @@ class BookController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function index()
+    public static function index()
     {
         //
+        $books = Book::all();
+        return view('indexBook', ['books' => $books]);
     }
 
     /**
@@ -31,22 +33,32 @@ class BookController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
-    public function store(Request $request)
+    public static function store(Request $request)
     {
         //
+        $book = new Book();
+        $book->bookTitle = $request['title'];
+        $book->bookFirstName = $request['firstname'];
+        $book->bookMainName = $request['mainname'];
+        $book->bookPrice = $request['price'];
+        $book->bookNumPages = $request['numpages'];
+
+        $book->save();
+        return redirect('/index');
     }
 
     /**
      * Display the specified resource.
      *
      * @param  \App\Models\Book  $book
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function show(Book $book)
+    public static function show(Book $book)
     {
         //
+        return view('bookShow', compact('cd'));
     }
 
     /**

@@ -10,11 +10,13 @@ class CdController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function index()
+    public static function index()
     {
         //
+        $cds = Cd::all();
+        return view('indexCd')->with('cds', $cds);
     }
 
     /**
@@ -31,22 +33,34 @@ class CdController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
-    public function store(Request $request)
+    public static function store(Request $request)
     {
         //
+        $cds = new Cd();
+        $cds->cdTitle = $request['title'];
+        $cds->cdFirstName = $request['firstname'];
+        $cds->cdMainName = $request['mainname'];
+        $cds->cdPrice = $request['price'];
+        $cds->cdPlayLength = $request['numpages'];
+
+
+        $cds->save();
+        return redirect('/index');
     }
 
     /**
      * Display the specified resource.
      *
      * @param  \App\Models\Cd  $cd
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
-    public function show(Cd $cd)
+    public static function show(Cd $cd)
     {
         //
+
+        return view('cdShow', compact('cd'));
     }
 
     /**

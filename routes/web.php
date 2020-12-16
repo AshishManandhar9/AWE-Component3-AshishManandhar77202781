@@ -1,6 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\CdController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +26,15 @@ Route::redirect('/', '/index')->name('index');
 
 Route::get("/index", function () {
     return view('index');
+});
+
+Route::post('/addData', function (Request $request) {
+    if ($request['type'] == "book") {
+        \App\Http\Controllers\BookController::store($request);
+    } else if ($request['type'] == "cd") {
+        \App\Http\Controllers\CdController::store($request);
+    }
+    return redirect()->route('index');
 });
 
 Auth::routes();
